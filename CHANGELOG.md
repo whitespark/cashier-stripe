@@ -1,6 +1,13 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/cashier/compare/v15.6.2...15.x)
+## [Unreleased](https://github.com/laravel/cashier/compare/v15.6.3...15.x)
+
+## [v15.6.3](https://github.com/laravel/cashier/compare/v15.6.2...v15.6.3) - 2025-04-01
+
+* Fix typo in upgrade guide by [@ash-jc-allen](https://github.com/ash-jc-allen) in https://github.com/laravel/cashier-stripe/pull/1737
+* [15.x] Highlight method name change by [@driesvints](https://github.com/driesvints) in https://github.com/laravel/cashier-stripe/pull/1740
+* Adds explicit nullable to avoid php 8.4 deprecation warnings by [@PNardman](https://github.com/PNardman) in https://github.com/laravel/cashier-stripe/pull/1742
+* Add `remote_enabled` option to enable external font downloads by [@jbrooksuk](https://github.com/jbrooksuk) in https://github.com/laravel/cashier-stripe/pull/1745
 
 ## [v15.6.2](https://github.com/laravel/cashier/compare/v15.6.1...v15.6.2) - 2025-01-28
 
