@@ -88,6 +88,7 @@ class WebhookController extends Controller
                     'quantity' => $isSinglePrice && isset($firstItem['quantity']) ? $firstItem['quantity'] : null,
                     'trial_ends_at' => $trialEndsAt,
                     'ends_at' => null,
+                    'renews_at' => Carbon::createFromTimestamp($data['current_period_end'])
                 ]);
 
                 foreach ($data['items']['data'] as $item) {
@@ -178,6 +179,11 @@ class WebhookController extends Controller
             // Status...
             if (isset($data['status'])) {
                 $subscription->stripe_status = $data['status'];
+            }
+
+            // Renewal date...
+            if (isset($data['current_period_end'])) {
+                $subscription->renews_at = Carbon::createFromTimestamp($data['current_period_end']);
             }
 
             $subscription->save();

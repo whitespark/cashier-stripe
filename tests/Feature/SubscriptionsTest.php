@@ -132,6 +132,7 @@ class SubscriptionsTest extends FeatureTestCase
         $this->assertFalse($user->subscription('main')->onGracePeriod());
         $this->assertTrue($user->subscription('main')->recurring());
         $this->assertFalse($user->subscription('main')->ended());
+        $this->assertSame(Carbon::today()->addMonth()->toDateString(), $user->subscription('main')->renews_at->toDateString());
 
         // Cancel Subscription
         $subscription = $user->subscription('main');
