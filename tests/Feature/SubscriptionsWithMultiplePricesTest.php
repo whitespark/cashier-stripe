@@ -351,6 +351,7 @@ class SubscriptionsWithMultiplePricesTest extends FeatureTestCase
             'stripe_price' => self::$priceId,
             'quantity' => 1,
             'stripe_status' => StripeSubscription::STATUS_ACTIVE,
+            'renews_at' => now()->addMonth(),
         ]);
 
         $subscription->items()->create([

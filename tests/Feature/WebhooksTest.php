@@ -49,6 +49,7 @@ class WebhooksTest extends FeatureTestCase
     public function test_subscriptions_are_created()
     {
         $user = $this->createCustomer('subscriptions_are_created', ['stripe_id' => 'cus_foo']);
+        $renewal_date = Carbon::now()->addMonth();
 
         $this->postJson('stripe/webhook', [
             'id' => 'foo',
@@ -57,6 +58,7 @@ class WebhooksTest extends FeatureTestCase
                 'object' => [
                     'id' => 'sub_foo',
                     'customer' => 'cus_foo',
+                    'current_period_end' => $renewal_date->unix(),
                     'cancel_at_period_end' => false,
                     'quantity' => 10,
                     'items' => [
@@ -77,6 +79,7 @@ class WebhooksTest extends FeatureTestCase
             'stripe_id' => 'sub_foo',
             'stripe_status' => 'active',
             'quantity' => 10,
+            'renews_at' => $renewal_date,
         ]);
 
         $this->assertDatabaseHas('subscription_items', [
@@ -89,6 +92,8 @@ class WebhooksTest extends FeatureTestCase
 
     public function test_subscriptions_are_updated()
     {
+        $this->freezeTime();
+
         $user = $this->createCustomer('subscriptions_are_updated', ['stripe_id' => 'cus_foo']);
 
         $subscription = $user->subscriptions()->create([
@@ -96,6 +101,7 @@ class WebhooksTest extends FeatureTestCase
             'stripe_id' => 'sub_foo',
             'stripe_price' => 'price_foo',
             'stripe_status' => StripeSubscription::STATUS_ACTIVE,
+            'renews_at' => now()->addMonth(),
         ]);
 
         $item = $subscription->items()->create([
@@ -112,6 +118,7 @@ class WebhooksTest extends FeatureTestCase
                 'object' => [
                     'id' => $subscription->stripe_id,
                     'customer' => 'cus_foo',
+                    'current_period_end' => now()->addMonths(2)->unix(),
                     'cancel_at_period_end' => false,
                     'items' => [
                         'data' => [[
@@ -129,6 +136,7 @@ class WebhooksTest extends FeatureTestCase
             'user_id' => $user->id,
             'stripe_id' => 'sub_foo',
             'quantity' => 5,
+            'renews_at' => now()->addMonths(2)
         ]);
 
         $this->assertDatabaseHas('subscription_items', [
@@ -154,6 +162,7 @@ class WebhooksTest extends FeatureTestCase
             'stripe_id' => 'sub_foo',
             'stripe_price' => 'price_foo',
             'stripe_status' => StripeSubscription::STATUS_ACTIVE,
+            'renews_at' => now()->addMonth(),
         ]);
 
         $item = $subscription->items()->create([

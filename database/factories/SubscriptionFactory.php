@@ -37,6 +37,7 @@ class SubscriptionFactory extends Factory
             'quantity' => null,
             'trial_ends_at' => null,
             'ends_at' => null,
+            'renews_at' => now()->addMonth(),
         ];
     }
 

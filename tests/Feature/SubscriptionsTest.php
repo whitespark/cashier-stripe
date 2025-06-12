@@ -132,6 +132,7 @@ class SubscriptionsTest extends FeatureTestCase
         $this->assertFalse($user->subscription('main')->onGracePeriod());
         $this->assertTrue($user->subscription('main')->recurring());
         $this->assertFalse($user->subscription('main')->ended());
+        $this->assertSame(Carbon::today()->addMonth()->toDateString(), $user->subscription('main')->renews_at->toDateString());
 
         // Cancel Subscription
         $subscription = $user->subscription('main');
@@ -766,6 +767,7 @@ class SubscriptionsTest extends FeatureTestCase
             'quantity' => 1,
             'trial_ends_at' => null,
             'ends_at' => null,
+            'renews_at' => now()->addMonth(),
         ]);
 
         // Subscription is incomplete
@@ -904,6 +906,7 @@ class SubscriptionsTest extends FeatureTestCase
             'quantity' => 1,
             'trial_ends_at' => null,
             'ends_at' => null,
+            'renews_at' => now()->addMonth(),
         ]);
 
         $this->assertTrue($user->refresh()->subscribed());
@@ -922,6 +925,7 @@ class SubscriptionsTest extends FeatureTestCase
             'quantity' => 1,
             'trial_ends_at' => null,
             'ends_at' => null,
+            'renews_at' => now()->addMonth(),
         ]);
 
         $this->assertTrue($user->refresh()->subscribed());

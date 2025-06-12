@@ -53,6 +53,7 @@ class Subscription extends Model
         'ends_at' => 'datetime',
         'quantity' => 'integer',
         'trial_ends_at' => 'datetime',
+        'renews_at' => 'datetime',
     ];
 
     /**
