@@ -767,6 +767,7 @@ class SubscriptionsTest extends FeatureTestCase
             'quantity' => 1,
             'trial_ends_at' => null,
             'ends_at' => null,
+            'renews_at' => now()->addMonth(),
         ]);
 
         // Subscription is incomplete
@@ -905,6 +906,7 @@ class SubscriptionsTest extends FeatureTestCase
             'quantity' => 1,
             'trial_ends_at' => null,
             'ends_at' => null,
+            'renews_at' => now()->addMonth(),
         ]);
 
         $this->assertTrue($user->refresh()->subscribed());
@@ -923,6 +925,7 @@ class SubscriptionsTest extends FeatureTestCase
             'quantity' => 1,
             'trial_ends_at' => null,
             'ends_at' => null,
+            'renews_at' => now()->addMonth(),
         ]);
 
         $this->assertTrue($user->refresh()->subscribed());
